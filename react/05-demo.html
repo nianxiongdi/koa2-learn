@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>React 实例</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+<script type="text/babel">
+class ButtonComment extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    }
+  }
+
+  sendSword = () => {
+    var newCount = this.state.count + 1;
+    this.setState({
+      count: this.state.count + 1
+    });
+    this.props.getSwordCount();
+  }
+
+  render() {
+    return (
+      <button onClick={this.sendSword}>{this.props.buttonName}</button>
+    );
+  }
+}
+// 父类
+class ImDaddyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sendCount: 0
+    }
+
+
+
+  }
+
+
+  getSwordCount = () => {
+    this.setState({sendCount:this.refs.getSwordButton.state.count + 1});
+  }
+
+  sendSword = () => {
+    console.log(this.refs);
+
+    this.refs.getSwordButton.sendSword();
+  }
+
+  render() {
+ 
+    return (
+      <div>
+        <ButtonComment ref="getSwordButton" getSwordCount={this.getSwordCount} buttonName="儿子送宝刀"/>
+        <button onClick={this.sendSword}>通过老爸送宝刀</button>
+        <p>
+          父子俩共送{this.state.sendCount}把宝刀！！！
+        </p>
+      </div>
+    );
+  }
+}
+
+
+ReactDOM.render(
+    <ImDaddyComponent />,
+    document.getElementById('example')
+);
+ 
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>React 实例</title>
+<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+
+<script type="text/babel">
+
+//方式1
+class MyComponent extends React.Component {
+  handleClick() {
+    // 使用原生的 DOM API 获取焦点
+    this.refs.myInput.focus();
+
+    console.log(this.refs.myInput)
+
+
+
+  }
+  render() {
+    //  当组件插入到 DOM 后，ref 属性添加一个组件的引用于到 this.refs
+    return (
+      <div>
+        <input type="text" ref="myInput" />
+        <input
+          type="button"
+          value="点我输入框获取焦点"
+          onClick={this.handleClick.bind(this)}
+        />
+      </div>
+    );
+  }
+}
+
+
+// 方式2
+class CustomTextInput extends React.Component {
+  constructor(props) {
+    super(props);
+    // create a ref to store the textInput DOM element
+    this.textInput = React.createRef();
+    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+
+  focusTextInput() {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.textInput.current.focus();
+  }
+
+  render() {
+    // tell React that we want to associate the <input> ref
+    // with the `textInput` that we created in the constructor
+    return (
+      <div>
+        <input
+          type="text"
+          ref={this.textInput} />
+
+        <input
+          type="button"
+          value="Focus the text input"
+          onClick={this.focusTextInput}
+        />
+      </div>
+    );
+  }
+}
+ 
+ReactDOM.render(
+  <CustomTextInput />,
+  document.getElementById('example')
+);
+</script>
+
+</body>
+</html>
