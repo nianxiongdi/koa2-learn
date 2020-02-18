@@ -6,7 +6,7 @@ class Math {
   }
 }
  
-
+   
 const math = new Math();
 
 // passed parameters should get logged now
